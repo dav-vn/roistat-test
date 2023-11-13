@@ -22,6 +22,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class Account extends Model
 {
     use HasFactory;
+    public $timestamps = false;
 
     /**
      * The guarded attributes on the model.
@@ -30,7 +31,6 @@ class Account extends Model
      */
     protected $guarded = [
         'id',
-        'name',
     ];
 
     /**

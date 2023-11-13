@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('accounts', function (Blueprint $table) {
             $table->id();
             $table->integer('amo_id')->unsigned()->unique();
-            $table->string('name');
         });
     }
 
