@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use AmoCRM\Exceptions\BadTypeException;
 use App\Services\AuthService;
+use App\Services\SimpleAuthService;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Validator;
 
 /**
@@ -19,21 +22,21 @@ class AuthController extends Controller
      *
      * @param Request $request
      * @return JsonResponse
+     * @throws BadTypeException
      */
     public function handle(Request $request): JsonResponse
     {
-        $validator = Validator::make($request->query(), [
-            'id' => 'nullable|numeric',
-            'code' => 'required_with:from_widget|numeric',
-            'referer' => 'required_with:from_widget|numeric',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => 'error',
-                'error_message' => 'Invalid request',
-            ], 400);
-        }
+//        $validator = Validator::make($request->query(), [
+//            'code' => 'required_with:from_widget|numeric',
+//            'referer' => 'required_with:from_widget|numeric',
+//        ]);
+//
+//        if ($validator->fails()) {
+//            return response()->json([
+//                'status' => 'error',
+//                'error_message' => 'Invalid request',
+//            ], 400);
+//        }
 
         $auth = new AuthService();
         $simpleAuth = new SimpleAuthService();
@@ -47,8 +50,9 @@ class AuthController extends Controller
         }
 
         return response()->json([
-            $auth->auth($accountParams),
-        ]);
+            'status' => 'success',
+            'auth as' => $auth->auth($accountParams),
+        ], 200);
     }
 }
 
