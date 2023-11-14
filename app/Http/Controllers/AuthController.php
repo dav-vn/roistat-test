@@ -26,18 +26,6 @@ class AuthController extends Controller
      */
     public function handle(Request $request): JsonResponse
     {
-//        $validator = Validator::make($request->query(), [
-//            'code' => 'required_with:from_widget|numeric',
-//            'referer' => 'required_with:from_widget|numeric',
-//        ]);
-//
-//        if ($validator->fails()) {
-//            return response()->json([
-//                'status' => 'error',
-//                'error_message' => 'Invalid request',
-//            ], 400);
-//        }
-
         $auth = new AuthService();
         $simpleAuth = new SimpleAuthService();
         $accountParams = $request->query();
